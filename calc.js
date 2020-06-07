@@ -109,7 +109,13 @@ function replaceExpression(answer, index, expression) {
 }
 
 function parseElements(expression) {
-    const parsed = expression.replace(/ /g, '').match(/(\d+|sqrt(?:\(.+?\))|(?:\(.+?\))|\+|-|\*|\/|\^)/g)
+    const parsed = expression
+        .replace(/ /g, '')
+        .replace(/--/g, '0-')
+        .replace(/++/g, '0+')
+        .replace(/+-/g, '-')
+        .replace(/-+/g, '0-')
+        .match(/(\d+|sqrt(?:\(.+?\))|(?:\(.+?\))|\+|-|\*|\/|\^)/g)
     for (const index in parsed) {
         let element = parsed[index]
         if (!isNaN(parseFloat(element))) {
